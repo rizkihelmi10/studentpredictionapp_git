@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="0dp">
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbarpred"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/GreenTrash"
+        android:elevation="4dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:navigationIcon="@drawable/arrowback"
+        app:titleTextColor="@android:color/white" />
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+
+    <TextView
+        android:id="@+id/textViewTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Final Score Prediction"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewDescription"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Predict your final score as well as your required final exam score"
+        android:textSize="16sp"
+        android:textColor="@android:color/darker_gray"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"/>
+    <TextView
+        android:id="@+id/coursename"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course Name"
+        android:textSize="15sp"
+        android:textColor="@color/BlueTrash"
+        android:layout_gravity="center_horizontal"
+        android:textAlignment="center"
+        android:layout_marginBottom="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewFinalScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewFinalScoreTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Final Score"
+                android:textSize="30sp"
+                android:textStyle="bold"/>
+
+        </androidx.cardview.widget.CardView>
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewRequiredExamScore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_marginTop="30dp"
+            android:padding="16dp">
+
+        <TextView
+            android:id="@+id/textViewRequiredExamScoreTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Required Final Exam Score"
+            android:textSize="30sp"
+            android:textStyle="bold"/>
+        </androidx.cardview.widget.CardView>
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="40dp">
+
+        <TextView
+            android:id="@+id/Test1tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test 1"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"/>
+
+        <EditText
+            android:id="@+id/Test1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:padding="8dp"
+            android:layout_weight="1"/>
+
+        <TextView
+            android:id="@+id/Test2tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Test 2"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"/>
+
+        <EditText
+            android:id="@+id/Test2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:padding="8dp"
+            android:layout_weight="1"/>
+
+        <!-- Add similar views for HP, Weight, Acceleration, Year, and Country -->
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/assign1tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assignment 1"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"/>
+
+        <EditText
+            android:id="@+id/assign1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:padding="8dp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/assign2tx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Assignment 2"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"/>
+
+        <EditText
+            android:id="@+id/assign2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            android:padding="8dp"
+            android:layout_weight="1"/>
+
+        <!-- Add similar views for HP, Weight, Acceleration, Year, and Country -->
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="20dp">
+
+        <TextView
+            android:id="@+id/cwtx"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Coursework"
+            android:textSize="18sp"
+            android:layout_marginEnd="8dp"/>
+
+        <EditText
+            android:id="@+id/cw"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:padding="8dp"
+            android:layout_weight="1"/>
+
+
+        <!-- Add similar views for HP, Weight, Acceleration, Year, and Country -->
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/calculatecw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/GreenTrash"
+        android:padding="16dp"
+        android:text="Calculate coursework"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="70dp"/>
+
+    <Button
+        android:id="@+id/buttonPredict"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/GreenTrash"
+        android:padding="16dp"
+        android:text="Predict Score"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        android:layout_marginTop="30dp"/>
+
+</LinearLayout>
+
+</ScrollView>
+</LinearLayout>

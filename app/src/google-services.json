@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "456393059933",
+    "project_id": "finalyearfb",
+    "storage_bucket": "finalyearfb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:456393059933:android:95b2e92882a755dd00a7b4",
+        "android_client_info": {
+          "package_name": "com.fyp.studentpredictapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCN9hY-ylVgiTgmgw6y9ib4E_E6ZnaSaC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="course_types">
+        <item>Fully Coursework</item>
+        <item>With Final Exam</item>
+    </string-array>
+
+    <!-- Array for number of assessments -->
+    <string-array name="num_assessments">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
+    <string-array name="first_spinner_items">
+        <item>Test 1</item>
+        <item>Test 2</item>
+        <item>Assignment 1</item>
+        <item>Assignment 2</item>
+        <item>Project 1</item>
+        <item>Project 2</item>
+        <item>Project</item>
+    </string-array>
+
+    <string-array name="second_spinner_items">
+        <item>5%</item>
+        <item>10%</item>
+        <item>15%</item>
+        <item>20%</item>
+        <item>25%</item>
+        <item>30%</item>
+        <item>35%</item>
+        <item>40%</item>
+        <item>45%</item>
+        <item>50%</item>
+    </string-array>
+</resources>

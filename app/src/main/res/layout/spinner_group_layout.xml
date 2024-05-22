@@ -1,0 +1,44 @@
+<!-- spinner_group_layout.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!-- TextView for Assessment Type -->
+    <TextView
+        android:id="@+id/textViewAssessmentType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Spinner for Assessment Type -->
+    <Spinner
+        android:id="@+id/spinnerAssessmentType"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"/>
+
+    <!-- TextView for Percentage -->
+    <TextView
+        android:id="@+id/textViewPercentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/black"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"/>
+
+    <!-- Spinner for Percentage -->
+    <Spinner
+        android:id="@+id/spinnerPercentage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp" />
+
+</LinearLayout>

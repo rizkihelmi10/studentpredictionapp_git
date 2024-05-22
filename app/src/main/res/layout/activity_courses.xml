@@ -22,97 +22,39 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Choose your courses"
+        android:text="Courses List"
         android:textAlignment="center"
         android:textColor="@color/GreenTrash"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.12" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/checkBox_container"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toBottomOf="@id/textView"
+        app:layout_constraintBottom_toTopOf="@id/submitButton"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/noCoursesTextView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:text="You have not registered any course yet"
+        android:textColor="@color/GreenTrash"
+        android:textSize="15sp"
+        android:visibility="gone"
+        app:flow_horizontalAlign="center"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.18">
+        app:layout_constraintTop_toTopOf="@+id/toolbar" />
 
-        <CheckBox
-            android:id="@+id/checkBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/GreenTrash"
-            android:text=""
-            android:textSize="18sp"
-            android:textColor="@color/black"
-            android:padding="7dp"/>
 
-        <CheckBox
-            android:id="@+id/checkBox2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/black"
-            android:buttonTint="@color/GreenTrash"
-            android:textSize="18sp"
-            android:padding="7dp"/>
-
-        <CheckBox
-            android:id="@+id/checkBox3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/GreenTrash"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:padding="7dp"/>
-
-        <CheckBox
-            android:id="@+id/checkBox4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/GreenTrash"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:padding="7dp"/>
-
-        <CheckBox
-            android:id="@+id/checkBox5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/GreenTrash"
-            android:text=""
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:padding="7dp"/>
-        <CheckBox
-            android:id="@+id/checkBox6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:buttonTint="@color/GreenTrash"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:padding="7dp"/>
-        <CheckBox
-            android:id="@+id/checkBox7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/black"
-            android:buttonTint="@color/GreenTrash"
-            android:textSize="18sp"
-            android:padding="7dp"/>
-    </LinearLayout>
 
     <Button
         android:id="@+id/submitButton"
@@ -120,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/BlueTrash"
-        android:text="Update courses"
+        android:text="Register courses"
         android:textColor="@color/white"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -128,7 +70,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBox_container"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerView"
         app:layout_constraintVertical_bias="0.746" />
     <ProgressBar
         android:id="@+id/progressBar"

@@ -4,13 +4,17 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.ProgressBar
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -20,6 +24,7 @@ class courses : AppCompatActivity() {
     private lateinit var firestore: FirebaseFirestore
     private lateinit var checkBoxContainer: LinearLayout
     private lateinit var progressBar: ProgressBar
+    private lateinit var noCoursesTextView: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,17 +32,9 @@ class courses : AppCompatActivity() {
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         submitButton = findViewById(R.id.submitButton)
-        checkBoxes = listOf(
-            findViewById(R.id.checkBox),
-            findViewById(R.id.checkBox2),
-            findViewById(R.id.checkBox3),
-            findViewById(R.id.checkBox4),
-            findViewById(R.id.checkBox5),
-            findViewById(R.id.checkBox6),
-            findViewById(R.id.checkBox7)
-        )
+        noCoursesTextView = findViewById(R.id.noCoursesTextView)
+
         progressBar = findViewById(R.id.progressBar)
-        checkBoxContainer = findViewById(R.id.checkBox_container)
         toolbar.setNavigationOnClickListener {
             val intent = Intent(this, DashboardPage::class.java)
             startActivity(intent)
@@ -46,22 +43,64 @@ class courses : AppCompatActivity() {
 
         // Initialize Firestore
         firestore = FirebaseFirestore.getInstance()
-        showLoading()
-        generateCourseList()
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+
+        userId?.let { uid ->
+            // Fetch courses from Firestore
+            firestore.collection("users").document(uid).collection("courses")
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (documents != null && !documents.isEmpty) {
+                        val courses = mutableListOf<Pair<String, String>>()
+
+                        for (document in documents) {
+                            val courseCode = document.getString("courseCode")
+                            val courseName = document.getString("courseName")
+                            if (courseCode != null && courseName != null) {
+                                courses.add(Pair(courseCode, courseName))
+                            }
+                        }
+
+                        if (courses.isEmpty()) {
+                            noCoursesTextView.visibility = View.VISIBLE
+                        } else {
+                            noCoursesTextView.visibility = View.GONE
+                            // Display the courses (e.g., in a RecyclerView or ListView)
+                            displayCourses(courses)
+                            submitButton.setText("Add courses")
+                        }
+                    } else {
+                        noCoursesTextView.visibility = View.VISIBLE
+                    }
+                }
+                .addOnFailureListener { exception ->
+                    Log.e("FirestoreError", "Error fetching courses: ", exception)
+                }
+        }
+
+      /*  showLoading()*/
+       /* generateCourseList()*/
         submitButton.setOnClickListener {
-            updateCourses()
+            val intent = Intent(this, RegisterCourse::class.java)
+            startActivity(intent)
         }
     }
+    private fun displayCourses(courses: List<Pair<String, String>>) {
+        // Assuming you have a RecyclerView to display the courses
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.adapter = CoursesAdapter(courses)
+    }
 
-    private fun showLoading() {
+ /*   private fun showLoading() {
         progressBar.visibility = View.VISIBLE
     }
 
     private fun hideLoading() {
         progressBar.visibility = View.GONE
-    }
+    }*/
 
-    private fun generateCourseList() {
+    /*private fun generateCourseList() {
         firestore = FirebaseFirestore.getInstance()
 
         // Retrieve current user ID from Firebase Authentication
@@ -156,16 +195,16 @@ class courses : AppCompatActivity() {
                 }
         }
 
-    }
+    }*/
 
-    private fun createCheckbox(courseName: String, index: Int) {
+  /*  private fun createCheckbox(courseName: String, index: Int) {
         val checkBox = CheckBox(this)
         checkBox.text = courseName
         checkBoxContainer.addView(checkBox, index)
-    }
+    }*/
 
 
-    @SuppressLint("SuspiciousIndentation")
+   /* @SuppressLint("SuspiciousIndentation")
     private fun updateCourses() {
         val selectedCourses = mutableListOf<String>()
 
@@ -189,5 +228,5 @@ class courses : AppCompatActivity() {
                     // You can show an error message or log the error
                 }
         }
-    }
+    }*/
 }

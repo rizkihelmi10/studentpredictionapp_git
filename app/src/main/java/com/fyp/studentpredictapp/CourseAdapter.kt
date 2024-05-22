@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 
 class CourseAdapter(private val courses: List<String>,private val listener: OnItemClickListener) :
@@ -40,8 +39,8 @@ class CourseAdapter(private val courses: List<String>,private val listener: OnIt
 
         }
 
-        fun bind(course: String) {
-            textCourseName.text = course
+        fun bind(course: String, listener: OnItemClickListener) {
+            textCourseName.text = course.toString()
         }
     }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
@@ -52,7 +51,7 @@ class CourseAdapter(private val courses: List<String>,private val listener: OnIt
 
     override fun onBindViewHolder(holder: CourseViewHolder, position: Int) {
         val course = courses[position]
-        holder.bind(course)
+        holder.bind(course, listener)
     }
 
     override fun getItemCount(): Int {

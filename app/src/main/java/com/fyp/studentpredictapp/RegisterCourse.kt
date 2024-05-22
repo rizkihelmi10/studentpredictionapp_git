@@ -49,6 +49,8 @@ class RegisterCourse : AppCompatActivity() {
             val courseType = spinnerCourseType.selectedItem.toString()
             val numAssessments = spinnerNumAssessments.selectedItem.toString()
 
+
+
             val intent = Intent(this, CourseRegist::class.java).apply {
                 putExtra(ARG_COURSE_CODE, courseCode)
                 putExtra(ARG_COURSE_NAME, courseName)
@@ -58,6 +60,10 @@ class RegisterCourse : AppCompatActivity() {
             }
             startActivity(intent)
 
+        }
+        toolbar.setNavigationOnClickListener {
+            val intent = Intent(this, courses::class.java)
+            startActivity(intent)
         }
     }
     companion object {

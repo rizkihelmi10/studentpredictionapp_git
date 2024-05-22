@@ -28,7 +28,8 @@
             android:theme="@style/Theme.MyApplication.Fullscreen" />
         <activity
             android:name=".Analytics"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="landscape"/>
         <activity
             android:name=".DetailedPrediction"
             android:exported="false" />

@@ -9,6 +9,7 @@
     tools:context=".courses" >
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
+        app:title="Courses"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:background="@color/GreenTrash"

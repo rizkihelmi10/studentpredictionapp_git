@@ -1,5 +1,6 @@
 package com.fyp.studentpredictapp
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapShader
@@ -45,6 +46,7 @@ class DashboardPage : AppCompatActivity() {
     private lateinit var updateprofilebutton: Button
     private lateinit var logo: ImageView
 
+    @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard_page)
@@ -57,18 +59,18 @@ class DashboardPage : AppCompatActivity() {
         interestsCard = findViewById(R.id.interestsCard)
         helpCard = findViewById(R.id.helpCard)
         settingsCard = findViewById(R.id.settingsCard)
-        profileB = findViewById(R.id.profileB)
-        textView = findViewById(R.id.textView)
-        textView2 = findViewById(R.id.textView2)
-        textView3 = findViewById(R.id.textView3)
+      //  profileB = findViewById(R.id.profileB)
+        //textView = findViewById(R.id.textView)
+        textView2 = findViewById(R.id.usernameTextView)
+        textView3 = findViewById(R.id.majorTextView)
         textView1 = findViewById(R.id.textView1)
         textView20 = findViewById(R.id.textView20)
         textView21 = findViewById(R.id.textView21)
         textView22 = findViewById(R.id.textView22)
         textView23 = findViewById(R.id.textView23)
         textView4 = findViewById(R.id.textView4)
-        updateprofilebutton = findViewById(R.id.editProfileB)
-        logo = findViewById(R.id.AppLogo)
+        updateprofilebutton = findViewById(R.id.editProfileButton)
+        logo = findViewById(R.id.appLogoImageView)
         val bitmap = (resources.getDrawable(R.drawable.student) as BitmapDrawable).bitmap
         val imageRounded = Bitmap.createBitmap(bitmap.width, bitmap.height, bitmap.config)
         val canvas = Canvas(imageRounded)
@@ -82,9 +84,9 @@ class DashboardPage : AppCompatActivity() {
 
         // Set OnClickListener or other necessary configurations for your views here
         // For example:
-        profileB.setOnClickListener {
-            // Handle profile button click
-        }
+//        profileB.setOnClickListener {
+//            // Handle profile button click
+//        }
         updateprofilebutton.setOnClickListener {
             val intent = Intent(this, UpdateProfile::class.java)
             startActivity(intent)

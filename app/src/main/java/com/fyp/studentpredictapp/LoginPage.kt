@@ -24,7 +24,7 @@ class LoginPage : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.login_page)
         editTextUsername = findViewById(R.id.editTextTextPersonName)
-        editTextPassword = findViewById(R.id.editTextTextPersonName2)
+        editTextPassword = findViewById(R.id.editTextTextPassword)
         buttonLogin = findViewById(R.id.buttonlogin)
         textViewDontHaveAccount = findViewById(R.id.donthaveaccount)
         textViewSignUp = findViewById(R.id.Signup)

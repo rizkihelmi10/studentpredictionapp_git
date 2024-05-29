@@ -178,8 +178,9 @@ class DetailedPrediction : AppCompatActivity() {
         val dynamicViewsContainer = findViewById<LinearLayout>(R.id.dynamicViewsContainer) // ID of your dynamic views container
 
         for (assessment in assessments) {
-            assessmentType = assessment["assessmentType"] as? String ?: ""
-            percentage = assessment["percentage"] as? String ?: ""
+            val assessmentType = assessment["assessmentType"] as? String ?: ""
+            val percentage = assessment["percentage"] as? String ?: ""
+            Log.d("TAG", "createDynamicViews: " + percentage)
 
             // Create TextView for assessment type
             val textView = TextView(this).apply {
@@ -210,33 +211,34 @@ class DetailedPrediction : AppCompatActivity() {
             dynamicViewsContainer.addView(editText)
 
             // Calculate total score for each assessment
-            buttonCalculateCoursework = findViewById(R.id.calculatecw)
+            val buttonCalculateCoursework = findViewById<Button>(R.id.calculatecw)
             buttonCalculateCoursework.setOnClickListener {
-                calculateCoursework()
+                calculateCoursework(assessments)
             }
         }
     }
-    private fun calculateCoursework() {
+
+    private fun calculateCoursework(assessments: List<Map<String, Any>>) {
         val dynamicViewsContainer = findViewById<LinearLayout>(R.id.dynamicViewsContainer)
         val totalAssessments = dynamicViewsContainer.childCount / 2
-        val assessments = mutableListOf<Pair<String, Double>>()
+        val assessmentsList = mutableListOf<Pair<String, Double>>()
 
         var totalCourseworkScore = 0.0
         var totalPercentage = 0.0
-        var score = 0.0
 
         // Collect assessment names and percentages from dynamic views
-        for (i in 0 until dynamicViewsContainer.childCount step 2) {
-            val editText = dynamicViewsContainer.getChildAt(i + 1) as? EditText
-            val textView = dynamicViewsContainer.getChildAt(i) as? TextView
+        for (i in 0 until totalAssessments) {
+            val editText = dynamicViewsContainer.getChildAt(i * 2 + 1) as? EditText
+            val textView = dynamicViewsContainer.getChildAt(i * 2) as? TextView
 
-             score = editText?.text.toString().toDoubleOrNull() ?: 0.0
-
-
-            val percentage = percentage.replace("%", "").toDoubleOrNull() ?: 0.0
+            val score = editText?.text.toString().toDoubleOrNull() ?: 0.0
+            val assessment = assessments[i]
+            val percentageStr = assessment["percentage"] as? String ?: ""
+            val percentage = percentageStr.replace("%", "").toDoubleOrNull() ?: 0.0
+            Log.d("TAGPercent", "calculateCoursework: " + percentage)
             totalPercentage += percentage
 
-            assessments.add(Pair("Assessment ${assessments.size + 1}" + textView, percentage))
+            assessmentsList.add(Pair("Assessment ${assessmentsList.size + 1}" + textView?.text, percentage))
 
             val percentagenew = percentage / 100.0
             val coursework = score * percentagenew
@@ -244,17 +246,20 @@ class DetailedPrediction : AppCompatActivity() {
         }
 
         // Generate the numbers array
-        val numbers = createNumbersArray(assessments, totalCourseworkScore, totalPercentage)
+        val numbers = createNumbersArray(assessmentsList, totalCourseworkScore, totalPercentage)
 
         // Log or handle the generated numbers array
         Log.d("DetailedPrediction", "Generated Numbers Array: ${numbers.joinToString()}")
 
         // Display total coursework score
-        cwtext.setText(totalCourseworkScore.toString())
-        if(cwtext.text.isNotEmpty()){
-            buttonCalculateCoursework.visibility = View.INVISIBLE
-            buttonPredict.visibility = View.VISIBLE
 
+        cwtext.setText(String.format("%.1f", totalCourseworkScore))
+
+        if (cwtext.text.isNotEmpty()) {
+            val buttonCalculateCoursework = findViewById<Button>(R.id.calculatecw)
+            buttonCalculateCoursework.visibility = View.INVISIBLE
+            val buttonPredict = findViewById<Button>(R.id.buttonPredict)
+            buttonPredict.visibility = View.VISIBLE
         }
 
         // Display total percentage
@@ -313,7 +318,7 @@ class DetailedPrediction : AppCompatActivity() {
             val calculatedFE = finalExam.toDouble() * multiplier.toDouble()
 
             finalexam.text = String.format("%.2f", calculatedFE)
-            savetoDb(assessments,prediction.toDouble(),calculatedFE)
+            savetoDb(assessments,prediction.toDouble(),calculatedFE, totalpercent)
         }
 
 
@@ -349,84 +354,85 @@ class DetailedPrediction : AppCompatActivity() {
         }
         return Tensor.fromBlob(inputArray, shape)
     }
-private fun savetoDb(assessments: List<Pair<String, Double>>, predictedFinalScore: Double, predictedFinalExam: Double) {
-    val dynamicViewsContainer = findViewById<LinearLayout>(R.id.dynamicViewsContainer)
-    val totalAssessments = dynamicViewsContainer.childCount / 2
-    val userId = FirebaseAuth.getInstance().currentUser?.uid
+    private fun savetoDb(assessments: List<Pair<String, Double>>, predictedFinalScore: Double, predictedFinalExam: Double, percentages: Double) {
+        val dynamicViewsContainer = findViewById<LinearLayout>(R.id.dynamicViewsContainer)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
 
-    if (userId != null) {
-        val assessments = mutableListOf<Map<String, Any>>()
-        var totalCourseworkScore = 0.0
-        var totalPercentage = 0.0
-        var score = 0.0
+        if (userId != null) {
+            val assessmentsList = mutableListOf<Map<String, Any>>()
+            var totalCourseworkScore = 0.0
+            var totalPercentage = 0.0
 
-        // Collect assessment names and percentages from dynamic views
-        for (i in 0 until dynamicViewsContainer.childCount step 2) {
-            val editText = dynamicViewsContainer.getChildAt(i + 1) as? EditText
-            val textView = dynamicViewsContainer.getChildAt(i) as? TextView
+            // Collect assessment names and percentages from dynamic views
+            for (i in 0 until dynamicViewsContainer.childCount step 2) {
+                val editText = dynamicViewsContainer.getChildAt(i + 1) as? EditText
+                val textView = dynamicViewsContainer.getChildAt(i) as? TextView
 
-            score = editText?.text.toString().toDoubleOrNull() ?: 0.0
+                val score = editText?.text.toString().toDoubleOrNull() ?: 0.0
 
+                // Retrieve percentage from the assessments list
+                val percentage = assessments[i / 2].second
 
-            val percentage = percentage.replace("%", "").toDoubleOrNull() ?: 0.0
-            if (textView != null) {
-                assessments.add(mapOf(
-                    "assessmentType" to  textView.text,
-                    "percentage" to percentage,
-                    "score" to score
-                ))
-            }
-            totalPercentage += percentage
-
-            val percentagenew = percentage / 100.0
-            val coursework = score * percentagenew
-            totalCourseworkScore += coursework
-        }
-        val courseRef = firestore.collection("users")
-            .document(userId)
-            .collection("courses")
-            .whereEqualTo("courseCode", courseName)
-            .limit(1)  // Assuming courseCode is unique, we limit to one result
-
-        courseRef.get().addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                val documents = task.result
-                if (documents != null && !documents.isEmpty) {
-                    val document = documents.documents[0] // Get the first (and only) document
-                    val documentId = document.id
-
-                    // Now update the specific document
-                    val updateData = mapOf(
-                        "assessments" to assessments,
-                        "coursework" to totalCourseworkScore,
-                        "predictedScore" to predictedFinalScore,
-                        "predictedFinal" to predictedFinalExam
-                    )
-
-                    firestore.collection("users")
-                        .document(userId)
-                        .collection("courses")
-                        .document(documentId)
-                        .update(updateData)
-                        .addOnSuccessListener {
-                            Log.d("Firestore", "Course data successfully updated!")
-                            Toast.makeText(this, "Course Prediction data successfully stored", Toast.LENGTH_SHORT).show()
-                        }
-                        .addOnFailureListener { e ->
-                            Log.w("Firestore", "Error updating document", e)
-                        }
-                } else {
-                    Log.d("Firestore", "No such document")
+                if (textView != null) {
+                    assessmentsList.add(mapOf(
+                        "assessmentType" to textView.text.toString(),
+                        "percentage" to percentage,
+                        "score" to score
+                    ))
                 }
-            } else {
-                Log.d("Firestore", "get failed with ", task.exception)
+                totalPercentage += percentage
+
+                val percentagenew = percentage / 100.0
+                val coursework = score * percentagenew
+                totalCourseworkScore += coursework
             }
+
+            val courseRef = FirebaseFirestore.getInstance().collection("users")
+                .document(userId)
+                .collection("courses")
+                .whereEqualTo("courseCode", courseName)
+                .limit(1)  // Assuming courseCode is unique, we limit to one result
+
+            courseRef.get().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val documents = task.result
+                    if (documents != null && !documents.isEmpty) {
+                        val document = documents.documents[0] // Get the first (and only) document
+                        val documentId = document.id
+
+                        // Now update the specific document
+                        val updateData = mapOf(
+                            "assessments" to assessmentsList,
+                            "coursework" to totalCourseworkScore,
+                            "predictedScore" to predictedFinalScore,
+                            "predictedFinal" to predictedFinalExam,
+                            "cwpercentage" to percentages
+                        )
+
+                        FirebaseFirestore.getInstance().collection("users")
+                            .document(userId)
+                            .collection("courses")
+                            .document(documentId)
+                            .update(updateData)
+                            .addOnSuccessListener {
+                                Log.d("Firestore", "Course data successfully updated!")
+                                Toast.makeText(this, "Course Prediction data successfully stored", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Log.w("Firestore", "Error updating document", e)
+                            }
+                    } else {
+                        Log.d("Firestore", "No such document")
+                    }
+                } else {
+                    Log.d("Firestore", "get failed with ", task.exception)
+                }
+            }
+        } else {
+            Log.d("Firestore", "User ID is null")
         }
-    } else {
-        Log.d("Firestore", "User ID is null")
     }
 
-}
 
 
     /*fun predictScore() {

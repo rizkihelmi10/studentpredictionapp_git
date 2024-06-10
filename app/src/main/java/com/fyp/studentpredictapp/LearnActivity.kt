@@ -8,7 +8,7 @@ class LearnActivity : AppCompatActivity() {
     lateinit var webView: WebView
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_learn2)
+        setContentView(R.layout.activity_learn)
         webView = findViewById(R.id.webView);
 
         // Load a web page

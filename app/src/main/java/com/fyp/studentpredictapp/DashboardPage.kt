@@ -10,17 +10,13 @@ import android.graphics.RectF
 import android.graphics.Shader
 import android.graphics.drawable.BitmapDrawable
 import android.os.Bundle
+import android.widget.Button
+import android.widget.ImageButton
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
-import android.widget.ImageButton
-import android.widget.LinearLayout
-import android.widget.TextView
-import android.view.View
-import android.widget.Button
-import android.widget.ImageView
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
-import com.fyp.studentpredictapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -91,6 +87,10 @@ class DashboardPage : AppCompatActivity() {
             val intent = Intent(this, UpdateProfile::class.java)
             startActivity(intent)
         }
+        settingsCard.setOnClickListener{
+            val intent = Intent(this, SettingsActivity::class.java)
+            startActivity(intent)
+        }
         practiceCard.setOnClickListener {
            val intent = Intent(this, courses::class.java)
             startActivity(intent)
@@ -105,6 +105,10 @@ class DashboardPage : AppCompatActivity() {
         }
         learnCard.setOnClickListener {
             val intent = Intent(this, LearnActivity::class.java)
+            startActivity(intent)
+        }
+        helpCard.setOnClickListener {
+            val intent = Intent(this, MessageActivity::class.java)
             startActivity(intent)
         }
         userData()
@@ -141,7 +145,7 @@ class DashboardPage : AppCompatActivity() {
                 .addOnSuccessListener { document ->
                     if (document != null && document.exists()) {
                         val name = document.getString("name")
-                        val major = document.getString("major")
+                        val major = document.getString("school")
 
                         // Display profile data if not default values
                         if (name != "FIRSTNAME LASTNAME" && major != "Major Name") {

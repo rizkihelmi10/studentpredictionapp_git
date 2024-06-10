@@ -14,7 +14,6 @@ import android.widget.ImageView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.fyp.studentpredictapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
@@ -43,7 +42,35 @@ class UpdateProfile : AppCompatActivity() {
         storage = FirebaseStorage.getInstance()
         storageRef = storage.reference.child("profile_images")
         spinnerMajor = findViewById(R.id.spinnerMajor)
-        val majorOptions = arrayOf("Intelligent Computing", "Software Engineering", "Computing Infrastructure")
+        val majorOptions = arrayOf(
+            "School of the Arts",
+            "School of Biological Sciences",
+            "School of Communication",
+            "School of Chemical Sciences",
+            "School of Computer Sciences",
+            "School of Distance Education",
+            "School of Educational Studies",
+            "School of Housing, Building and Planning",
+            "School of Humanities",
+            "School of Industrial Technology",
+            "School of Management",
+            "School of Mathematical Sciences",
+            "School of Pharmaceutical Sciences",
+            "School of Physics",
+            "School of Social Sciences",
+            "School of Language, Literacies and Translation",
+            "Institute of Postgraduates Studies",
+            "Graduate School of Business (GSB)",
+            "School of Civil Engineering",
+            "School of Electrical & Electronic Engineering",
+            "School of Aerospace Engineering",
+            "School of Chemical Engineering",
+            "School of Mechanical Engineering",
+            "School of Materials & Mineral Resources Engineering",
+            "School of Dental Sciences",
+            "School of Health Sciences",
+            "School of Medical Sciences"
+        )
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, majorOptions)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinnerMajor.adapter = adapter
@@ -111,7 +138,7 @@ class UpdateProfile : AppCompatActivity() {
                 // Create a HashMap to hold the updated profile data
                 val profileData = hashMapOf(
                     "name" to name,
-                    "major" to major
+                    "school" to major
                     // Add more fields as needed
                 )
 

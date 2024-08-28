@@ -31,7 +31,7 @@ The core of this application is the **Random Forest Regressor** algorithm, which
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/your-username/student-grade-predictor.git
+   git clone https://github.com/rizkihelmi10/studentpredictionapp_git.git
    ```
 2. **Open the project** in Android Studio.
 3. **Set up Firebase**: Follow the instructions to integrate your Firebase project with the app.

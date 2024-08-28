@@ -1,23 +1,23 @@
 package com.fyp.studentpredictapp
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.View
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
-import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
+
 
 class courses : AppCompatActivity() {
     private lateinit var submitButton: Button
@@ -26,6 +26,7 @@ class courses : AppCompatActivity() {
     private lateinit var checkBoxContainer: LinearLayout
     private lateinit var progressBar: ProgressBar
     private lateinit var noCoursesTextView: TextView
+    private lateinit var coursesAdapter: CoursesAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +41,17 @@ class courses : AppCompatActivity() {
             val intent = Intent(this, DashboardPage::class.java)
             startActivity(intent)
         }
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.edit_menu_item -> {
+                    toggleEditMode()
+                    true
+                }
+                else -> false
+            }
+        }
+
+
 
 
         // Initialize Firestore
@@ -86,13 +98,23 @@ class courses : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    fun toggleEditMode() {
+        coursesAdapter.toggleEditMode()
+    }
     private fun displayCourses(courses: List<Pair<String, String>>) {
-        // Assuming you have a RecyclerView to display the courses
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
-        recyclerView.adapter = CoursesAdapter(courses)
-        val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
-        recyclerView.addItemDecoration(dividerItemDecoration)
+        val userId = FirebaseAuth.getInstance().currentUser?.uid
+        userId?.let { uid ->
+            coursesAdapter = CoursesAdapter(courses.toMutableList(), uid, firestore)
+            recyclerView.adapter = coursesAdapter
+            val dividerItemDecoration = DividerItemDecoration(recyclerView.context, DividerItemDecoration.VERTICAL)
+            recyclerView.addItemDecoration(dividerItemDecoration)
+        }
+    }
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.toolbar_menu, menu)
+        return true
     }
 
 }

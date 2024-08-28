@@ -79,18 +79,6 @@
                 android:gravity="center_vertical">
 
                 <com.google.android.material.button.MaterialButton
-                    android:id="@+id/todoButton"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="0dp"
-                    android:textSize="12dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="TODO LIST"
-                    android:layout_marginRight="5dp"
-                    android:textColor="@color/LightBlue50"
-                    android:backgroundTint="@color/BlueTrash"/>
-
-                <com.google.android.material.button.MaterialButton
                     android:id="@+id/editProfileButton"
                     style="@style/Widget.MaterialComponents.Button.OutlinedButton"
                     android:layout_width="0dp"
